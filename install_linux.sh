@@ -8,22 +8,20 @@ set -euo pipefail
 
 REPO_URL="https://github.com/ula2877/illegal_stop.git"
 APP_DIR="illegal_stop"
-VENV_DIR=".venv"
 PYTHON_BIN="python3"
 
-echo "==> [1/9] Cek OS & package manager"
+echo "==> [1/8] Cek OS & package manager"
 if ! command -v apt-get >/dev/null 2>&1; then
   echo "Script ini dibuat untuk distro berbasis Debian/Ubuntu (apt-get)."
   echo "Silakan install dependensi manual jika memakai distro lain."
 fi
 
-echo "==> [2/9] Install dependensi sistem (butuh sudo)"
+echo "==> [2/8] Install dependensi sistem (butuh sudo)"
 sudo apt-get update
 sudo apt-get install -y \
   git \
   git-lfs \
   ${PYTHON_BIN} \
-  ${PYTHON_BIN}-venv \
   ${PYTHON_BIN}-pip \
   python3-dev \
   build-essential \
@@ -38,10 +36,10 @@ sudo apt-get install -y \
   ffmpeg \
   libgtk-3-0
 
-echo "==> [3/9] Inisialisasi Git LFS"
+echo "==> [3/8] Inisialisasi Git LFS"
 git lfs install
 
-echo "==> [4/9] Clone repository"
+echo "==> [4/8] Clone repository"
 if [ -d "$APP_DIR/.git" ]; then
   echo "Folder $APP_DIR sudah ada, melakukan git pull..."
   git -C "$APP_DIR" pull
@@ -53,17 +51,11 @@ fi
 
 cd "$APP_DIR"
 
-echo "==> [5/9] Buat virtual environment"
-if [ ! -d "$VENV_DIR" ]; then
-  $PYTHON_BIN -m venv "$VENV_DIR"
-fi
-
-# shellcheck disable=SC1091
-source "$VENV_DIR/bin/activate"
-
-echo "==> [6/9] Upgrade pip dan install dependensi Python"
-python -m pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
+echo "==> [5/8] Upgrade pip dan install dependensi Python"
+$PYTHON_BIN -m pip install --upgrade pip setuptools wheel --break-system-packages 2>/dev/null || \
+  $PYTHON_BIN -m pip install --upgrade pip setuptools wheel
+$PYTHON_BIN -m pip install -r requirements.txt --break-system-packages 2>/dev/null || \
+  $PYTHON_BIN -m pip install -r requirements.txt
 
 APP_PATH="$(pwd)"
 TARGET_USER="${SUDO_USER:-$USER}"
@@ -72,9 +64,9 @@ DESKTOP_FILE="$TARGET_HOME/Desktop/illegal-stop-detection.desktop"
 AUTOSTART_DIR="$TARGET_HOME/.config/autostart"
 AUTOSTART_FILE="$AUTOSTART_DIR/illegal-stop-detection.desktop"
 ICON_PATH="$APP_PATH/resources/images/icon.png"
-EXEC_CMD="/bin/bash -c 'cd \"$APP_PATH\" && source \"$APP_PATH/$VENV_DIR/bin/activate\" && python main.py'"
+EXEC_CMD="/bin/bash -c 'cd \"$APP_PATH\" && $PYTHON_BIN main.py'"
 
-echo "==> [7/9] Buat shortcut desktop"
+echo "==> [6/8] Buat shortcut desktop"
 mkdir -p "$TARGET_HOME/Desktop"
 cat > "$DESKTOP_FILE" <<EOF
 [Desktop Entry]
@@ -95,13 +87,13 @@ chown "$TARGET_USER":"$TARGET_USER" "$DESKTOP_FILE" 2>/dev/null || true
 # Tandai trusted di GNOME (Ubuntu 22); abaikan jika gio tidak tersedia / gagal
 sudo -u "$TARGET_USER" gio set "$DESKTOP_FILE" metadata::trusted true 2>/dev/null || true
 
-echo "==> [8/9] Buat autorun GNOME (Startup Applications)"
+echo "==> [7/8] Buat autorun GNOME (Startup Applications)"
 mkdir -p "$AUTOSTART_DIR"
 cp "$DESKTOP_FILE" "$AUTOSTART_FILE"
 chmod +x "$AUTOSTART_FILE"
 chown "$TARGET_USER":"$TARGET_USER" "$AUTOSTART_DIR" "$AUTOSTART_FILE" 2>/dev/null || true
 
-echo "==> [9/9] Konfigurasi auto-login dan nonaktifkan sleep/suspend (Ubuntu 22.04)"
+echo "==> [8/8] Konfigurasi auto-login dan nonaktifkan sleep/suspend (Ubuntu 22.04)"
 # Auto-login GDM3
 GDM_CUSTOM="/etc/gdm3/custom.conf"
 if [ -f "$GDM_CUSTOM" ]; then
@@ -155,8 +147,7 @@ echo "Sleep/suspend   : dinonaktifkan (systemd mask + gsettings best-effort)"
 echo ""
 echo "Untuk menjalankan manual:"
 echo "  cd \"$APP_PATH\""
-echo "  source \"$VENV_DIR/bin/activate\""
-echo "  python main.py"
+echo "  $PYTHON_BIN main.py"
 echo ""
 echo "Catatan:"
 echo "- Pastikan kamera/sumber video di resources/config.yaml sesuai dengan mesin Linux."
