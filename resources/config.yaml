@@ -1,0 +1,108 @@
+app_name: ILLEGAL STOP DETECTION
+version: 2.5
+admin_password: 8c29b0e30c508ccd66f15fe63fb12fda28f01b8cc7985522a09e63f423d0e4a7
+lokasi: '[TESTER] JPL 398 KM 223 5/6 Petak Kandangan Tandes'
+alamat: '[TESTER] Margomulyo Surabaya'
+kode_jpl: HAG80167
+koordinat_jpl:
+  lat: -7.257357
+  lon: 112.680624
+api: https://jupiter.myacts.com/kai-dashboard/v1/add-illegal-stop
+api_key: A58F2010B7C76DC6FC44B140627FCE324BC40425
+product_key: D3C0-DB1B-5F65
+mqtt_broker: broker.emqx.io
+mqtt_port: 1883
+mqtt_username: admin
+mqtt_password: admin
+mqtt_topic_pub: kai/acts/cctv/alert
+mqtt_sub_broker: broker.emqx.io
+mqtt_sub_port: 1883
+mqtt_sub_username: admin
+mqtt_sub_password: admin
+mqtt_topic_sub: kai/acts/eta
+confidence: 0.5
+device: cpu
+iou: 0.5
+frame_skip: 8.0
+area_overlap_threshold: 0.1
+n_data: 2
+speed_threshold: 5.0
+stop_threshold: 10.0
+alpha: 0.6
+excluded_ports:
+- COM4
+- COM5
+evidence_duration_minutes: 5
+evidence_retention_days: 1
+evidence_path: C:/Users/aacha/Desktop/evidence
+evidence_draw_detection: true
+cpu_usage_threshold: 80
+ram_usage_threshold: 80
+disk_usage_threshold: 100
+cameras:
+  cam1:
+    source_path: C:\Users\aacha\Documents\WORKSPACE\PROJECTS\ELMECH\ILLEGAL STOP DETECTION
+      v.2.5\resources/0106.mp4
+    side: left
+    label: street
+    areas:
+      danger:
+      - - 0.3942161339421613
+        - 0.8741542625169147
+      - - 0.4855403348554033
+        - 0.9025710419485792
+      - - 0.5593607305936074
+        - 0.9161028416779432
+      - - 0.7016742770167428
+        - 0.9377537212449256
+      - - 0.8226788432267884
+        - 0.9282814614343707
+      - - 0.9124809741248098
+        - 0.9066305818673883
+      - - 0.969558599695586
+        - 0.8809201623815968
+      - - 0.9984779299847792
+        - 0.8633288227334236
+      - - 0.997716894977169
+        - 0.5534506089309879
+      - - 0.8493150684931506
+        - 0.5277401894451962
+      - - 0.4855403348554033
+        - 0.44248985115020295
+      - - 0.4101978691019787
+        - 0.42354533152909335
+      - - 0.2968036529680365
+        - 0.8240866035182679
+  cam2:
+    source_path: C:\Users\aacha\Documents\WORKSPACE\PROJECTS\ELMECH\ILLEGAL STOP DETECTION
+      v.2.5\resources/playback.mp4
+    side: left
+    label: room
+    areas:
+      danger:
+      - - 0.3942161339421613
+        - 0.8741542625169147
+      - - 0.4855403348554033
+        - 0.9025710419485792
+      - - 0.5593607305936074
+        - 0.9161028416779432
+      - - 0.7016742770167428
+        - 0.9377537212449256
+      - - 0.8226788432267884
+        - 0.9282814614343707
+      - - 0.9124809741248098
+        - 0.9066305818673883
+      - - 0.969558599695586
+        - 0.8809201623815968
+      - - 0.9984779299847792
+        - 0.8633288227334236
+      - - 0.997716894977169
+        - 0.5534506089309879
+      - - 0.8493150684931506
+        - 0.5277401894451962
+      - - 0.4855403348554033
+        - 0.44248985115020295
+      - - 0.4101978691019787
+        - 0.42354533152909335
+      - - 0.2968036529680365
+        - 0.8240866035182679

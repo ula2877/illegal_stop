@@ -1,0 +1,11 @@
+PyQt5>=5.15
+opencv-python>=4.8
+numpy>=1.24
+ultralytics>=8.0
+shapely>=2.0
+paho-mqtt>=1.6
+requests>=2.31
+psutil>=5.9
+pyserial>=3.5
+PyYAML>=6.0
+mediapipe>=0.10
