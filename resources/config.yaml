@@ -7,7 +7,7 @@ kode_jpl: HAG80167
 koordinat_jpl:
   lat: -7.257357
   lon: 112.680624
-api: https://jupiter.myacts.com/kai-dashboard/v1/add-illegal-stop
+api: https://mars.myacts.com/kai-dashboard/v1/add-illegal-stop
 api_key: A58F2010B7C76DC6FC44B140627FCE324BC40425
 product_key: D3C0-DB1B-5F65
 mqtt_broker: broker.emqx.io
@@ -34,15 +34,14 @@ excluded_ports:
 - COM5
 evidence_duration_minutes: 5
 evidence_retention_days: 1
-evidence_path: C:/Users/aacha/Desktop/evidence
+evidence_path: evidence
 evidence_draw_detection: true
 cpu_usage_threshold: 80
 ram_usage_threshold: 80
 disk_usage_threshold: 100
 cameras:
   cam1:
-    source_path: C:\Users\aacha\Documents\WORKSPACE\PROJECTS\ELMECH\ILLEGAL STOP DETECTION
-      v.2.5\resources/0106.mp4
+    source_path: resources/0106.mp4
     side: left
     label: street
     areas:
@@ -74,8 +73,7 @@ cameras:
       - - 0.2968036529680365
         - 0.8240866035182679
   cam2:
-    source_path: C:\Users\aacha\Documents\WORKSPACE\PROJECTS\ELMECH\ILLEGAL STOP DETECTION
-      v.2.5\resources/playback.mp4
+    source_path: resources/playback.mp4
     side: left
     label: room
     areas:
