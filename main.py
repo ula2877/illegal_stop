@@ -1,7 +1,6 @@
 import sys
 import torch
 import torchvision
-from ultralytics import YOLO
 
 from PyQt5.QtWidgets import QApplication
 from app import App
